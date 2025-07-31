@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .calculator {
+            background: #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 300px;
+        }
+        .display {
+            background: #222;
+            color: #fff;
+            font-size: 2em;
+            padding: 15px;
+            text-align: right;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            background: #555;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #777;
+        }
+        .operator {
+            background: #ff9500;
+        }
+        .operator:hover {
+            background: #ffaa33;
+        }
+        .clear {
+            background: #a5a5a5;
+            color: black;
+        }
+        .clear:hover {
+            background: #c5c5c5;
+        }
+        .equals {
+            background: #ff9500;
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button class="operator" onclick="appendToDisplay('/')">/</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button class="operator" onclick="appendToDisplay('*')">×</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button class="operator" onclick="appendToDisplay('-')">-</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button class="equals" onclick="calculate()">=</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+        </div>
+    </div>
+
+    <script>
+        let currentDisplay = '0';
+        const display = document.getElementById('display');
+
+        function updateDisplay() {
+            display.textContent = currentDisplay;
+        }
+
+        function appendToDisplay(value) {
+            if (currentDisplay === '0' && value !== '.') {
+                currentDisplay = value;
+            } else {
+                currentDisplay += value;
+            }
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentDisplay = '0';
+            updateDisplay();
+        }
+
+        function calculate() {
+            try {
+                currentDisplay = eval(currentDisplay).toString();
+                updateDisplay();
+            } catch (error) {
+                currentDisplay = 'Error';
+                updateDisplay();
+                setTimeout(clearDisplay, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
